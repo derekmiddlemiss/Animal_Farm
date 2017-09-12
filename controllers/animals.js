@@ -1,4 +1,5 @@
 var express = require( 'express' );
+var Animal = require( '../models/animal.js' );
 var animalsRouter = express.Router();
 var MongoClient = require( 'mongodb' ).MongoClient;
 var db;
@@ -26,6 +27,18 @@ animalsRouter.get( '/', function( req, res ){
 // UPDATE
 
 // CREATE
+animalsRouter.post( '/', function( req, res ) {
+  console.log( "post working")
+  //Get animals data from body of req
+  var animalData = req.body;
+  //New up an animal
+  var animal = new Animal( animalData );
+  //Save to db
+  db.collection( 'animals' ).insert( animal );
+  res.redirect( '/api/animals' );
+
+
+})
 
 // DELETE
 
